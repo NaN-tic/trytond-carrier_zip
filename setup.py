@@ -1,11 +1,15 @@
 #!/usr/bin/env python
 # This file is part of the carrier_zip module for Tryton.
-# The COPYRIGHT file at the top level of this repository contains the full
-# copyright notices and license terms.
+# The COPYRIGHT file at the top level of this repository contains
+# the full copyright notices and license terms.
 from setuptools import setup
 import re
 import os
 import ConfigParser
+
+MODULE = 'carrier_zip'
+PREFIX = 'trytonzz'
+MODULE2PREFIX = {}
 
 
 def read(fname):
@@ -24,46 +28,42 @@ minor_version = int(minor_version)
 requires = []
 for dep in info.get('depends', []):
     if not re.match(r'(ir|res|webdav)(\W|$)', dep):
-        requires.append('trytond_%s >= %s.%s, < %s.%s' %
-            (dep, major_version, minor_version, major_version,
-                minor_version + 1))
+        prefix = MODULE2PREFIX.get(dep, 'trytond')
+        requires.append('%s_%s >= %s.%s, < %s.%s' %
+                (prefix, dep, major_version, minor_version,
+                major_version, minor_version + 1))
 requires.append('trytond >= %s.%s, < %s.%s' %
-    (major_version, minor_version, major_version, minor_version + 1))
+        (major_version, minor_version, major_version, minor_version + 1))
 
-setup(name='trytond_carrier',
+tests_require = ['proteus >= %s.%s, < %s.%s' %
+    (major_version, minor_version, major_version, minor_version + 1)]
+
+setup(name='%s_%s' % (PREFIX, MODULE),
     version=info.get('version', '0.0.1'),
     description='Tryton module add domain carriers with zip address',
-    long_description=read('README'),
-    author='Tryton',
-    url='http://www.tryton.org/',
-    download_url=("http://downloads.tryton.org/" +
-        info.get('version', '0.0.1').rsplit('.', 1)[0] + '/'),
-    package_dir={'trytond.modules.carrier': '.'},
+    author='Zikzakmedia SL',
+    author_email='zikzak@zikzakmedia.com',
+    url='http://www.zikzakmedia.com',
+    download_url='https://bitbucket.org/zikzakmedia/trytond-%s' % MODULE,
+    package_dir={'trytond.modules.%s' % MODULE: '.'},
     packages=[
-        'trytond.modules.carrier',
-        'trytond.modules.carrier.tests',
+        'trytond.modules.%s' % MODULE,
+        'trytond.modules.%s.tests' % MODULE,
         ],
     package_data={
-        'trytond.modules.carrier': (info.get('xml', [])
-            + ['tryton.cfg', 'view/*.xml', 'locale/*.po']),
+        'trytond.modules.%s' % MODULE: (info.get('xml', [])
+            + ['tryton.cfg', 'view/*.xml', 'locale/*.po', ]),
         },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Plugins',
+        'Framework :: Tryton',
         'Intended Audience :: Developers',
         'Intended Audience :: Financial and Insurance Industry',
         'Intended Audience :: Legal Industry',
         'Intended Audience :: Manufacturing',
         'License :: OSI Approved :: GNU General Public License (GPL)',
-        'Natural Language :: Bulgarian',
         'Natural Language :: Catalan',
-        'Natural Language :: Czech',
-        'Natural Language :: Dutch',
-        'Natural Language :: English',
-        'Natural Language :: French',
-        'Natural Language :: German',
-        'Natural Language :: Russian',
-        'Natural Language :: Slovenian',
         'Natural Language :: Spanish',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.7',
@@ -74,8 +74,8 @@ setup(name='trytond_carrier',
     zip_safe=False,
     entry_points="""
     [trytond.modules]
-    carrier = trytond.modules.carrier
-    """,
+    %s = trytond.modules.%s
+    """ % (MODULE, MODULE),
     test_suite='tests',
     test_loader='trytond.test_loader:Loader',
-    )
+)
