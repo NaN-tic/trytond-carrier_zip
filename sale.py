@@ -13,8 +13,8 @@ __metaclass__ = PoolMeta
 class Sale:
     __name__ = 'sale.sale'
     carrier_domain = fields.Function(fields.One2Many('carrier', None,
-            'Carrier Domain', on_change_with=['shipment_address'],
-            depends=['shipment_address']),
+            'Carrier Domain', on_change_with=['shipment_address', 'party'],
+            depends=['shipment_address', 'party']),
         'on_change_with_carrier_domain')
 
     @classmethod
@@ -37,6 +37,8 @@ class Sale:
             cls.carrier.domain.append(carrier_domain)
         if 'carrier_domain' not in cls.carrier.depends:
             cls.carrier.depends.append('carrier_domain')
+        if 'shipment_address' not in cls.carrier.depends:
+            cls.carrier.depends.append('shipment_address')
 
     def on_change_with_carrier_domain(self, name=None):
         Carrier = Pool().get('carrier')
