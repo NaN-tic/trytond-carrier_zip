@@ -15,3 +15,6 @@ en cualquier pedido de venta (no existe ningún filtro en este transportista en 
 Si añade o cambia nuevos rangos de códigos postales en los transportistas, recuerde de cerrar la pestaña
 de ventas si está abierta y volver abrir el listado de ventas para recargar los nuevos dominios en los
 transportistas según los códigos postales.
+
+Este módulo está pensado básicamente para códigos de España ya que la búsqueda de rangos de códigos
+se usa códigos postales que sean numéricos.
