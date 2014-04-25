@@ -63,7 +63,7 @@ class Sale:
 
     def _get_carrier_context(self):
         context = super(Sale, self)._get_carrier_context()
-        if self.carrier.carrier_cost_method == 'grid':
+        if self.carrier and self.carrier.carrier_cost_method == 'grid':
             context['shipment_zip'] = (self.shipment_address
                 and self.shipment_address.zip or None)
         return context
