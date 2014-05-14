@@ -24,21 +24,20 @@ class Sale:
             cls.lines.on_change.append('shipment_address')
         if 'shipment_address' not in cls.lines.depends:
             cls.lines.depends.append('shipment_address')
-        if 'shipment_address'  not in cls.carrier.on_change:
-            cls.carrier.on_change.append('shipment_address')
-        if 'shipment_address'  not in cls.carrier.depends:
-            cls.carrier.depends.append('shipment_address')
         cls._error_messages.update({
                 'zip_unavailable': 'The zip "%s" is unavailable for the '
                     'carrier "%s".',
                 })
-        carrier_domain = ('id', 'in', Eval('carrier_domain', []))
-        if carrier_domain not in cls.carrier.domain:
-            cls.carrier.domain.append(carrier_domain)
-        if 'carrier_domain' not in cls.carrier.depends:
-            cls.carrier.depends.append('carrier_domain')
-        if 'shipment_address' not in cls.carrier.depends:
-            cls.carrier.depends.append('shipment_address')
+        if hasattr(cls, 'carrier'):
+            if 'shipment_address' not in cls.carrier.on_change:
+                cls.carrier.on_change.append('shipment_address')
+            if 'shipment_address' not in cls.carrier.depends:
+                cls.carrier.depends.append('shipment_address')
+            carrier_domain = ('id', 'in', Eval('carrier_domain', []))
+            if carrier_domain not in cls.carrier.domain:
+                cls.carrier.domain.append(carrier_domain)
+            if 'carrier_domain' not in cls.carrier.depends:
+                cls.carrier.depends.append('carrier_domain')
 
     def on_change_with_carrier_domain(self, name=None):
         Carrier = Pool().get('carrier')
