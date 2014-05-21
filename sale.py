@@ -21,7 +21,7 @@ class Sale:
     def __setup__(cls):
         super(Sale, cls).__setup__()
         if 'shipment_address' not in cls.lines.on_change:
-            cls.lines.on_change.append('shipment_address')
+            cls.lines.on_change.add('shipment_address')
         if 'shipment_address' not in cls.lines.depends:
             cls.lines.depends.append('shipment_address')
         cls._error_messages.update({
@@ -30,7 +30,7 @@ class Sale:
                 })
         if hasattr(cls, 'carrier'):
             if 'shipment_address' not in cls.carrier.on_change:
-                cls.carrier.on_change.append('shipment_address')
+                cls.carrier.on_change.add('shipment_address')
             if 'shipment_address' not in cls.carrier.depends:
                 cls.carrier.depends.append('shipment_address')
             carrier_domain = ('id', 'in', Eval('carrier_domain', []))
@@ -39,6 +39,7 @@ class Sale:
             if 'carrier_domain' not in cls.carrier.depends:
                 cls.carrier.depends.append('carrier_domain')
 
+    @fields.depends('shipment_address')
     def on_change_with_carrier_domain(self, name=None):
         Carrier = Pool().get('carrier')
         shipment_zip = (self.shipment_address and self.shipment_address.zip
