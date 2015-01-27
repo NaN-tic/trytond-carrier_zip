@@ -72,6 +72,8 @@ class Sale:
         shipment_zip = (self.shipment_address and self.shipment_address.zip
             or '')
         carrier = self.carrier
+        if not carrier.zips:
+            return res
         if (carrier and shipment_zip):
             for carrier_zip in carrier.zips:
                 if (int(carrier_zip.start_zip) <= int(shipment_zip)
