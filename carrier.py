@@ -2,7 +2,7 @@
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
 from trytond.model import ModelView, ModelSQL, fields
-from trytond.pool import PoolMeta
+from trytond.pool import Pool, PoolMeta
 
 __metaclass__ = PoolMeta
 __all__ = ['CarrierZip', 'Carrier']
@@ -40,3 +40,12 @@ class CarrierZip(ModelSQL, ModelView):
 class Carrier:
     __name__ = 'carrier'
     zips = fields.One2Many('carrier.zip', 'carrier', 'Carrier Zips')
+
+    @staticmethod
+    def get_carriers_from_zip(zip_code):
+        CarrierZip = Pool().get('carrier.zip')
+        carrier_zips = CarrierZip.search([
+                ('start_zip', '<=', zip_code),
+                ('end_zip', '>=', zip_code),
+                ])
+        return [c.carrier for c in carrier_zips]
