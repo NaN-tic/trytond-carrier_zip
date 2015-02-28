@@ -48,8 +48,13 @@ class Sale:
         for carrier in carriers:
             for carrier_zip in carrier.zips:
                 if shipment_zip:
-                    if (int(carrier_zip.start_zip) <= int(shipment_zip)
-                            <= int(carrier_zip.end_zip)):
+                    try:
+                        zip_ = int(shipment_zip)
+                        start_zip = int(carrier_zip.start_zip)
+                        end_zip = int(carrier_zip.end_zip)
+                    except:
+                        break
+                    if (start_zip <= zip_ <= end_zip):
                         carrier_ids.append(carrier.id)
                         break
                 else:
