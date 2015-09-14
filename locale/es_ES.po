@@ -21,11 +21,11 @@ msgstr "Transportista"
 
 msgctxt "field:carrier.zip,create_date:"
 msgid "Create Date"
-msgstr "Fecha de creación"
+msgstr "Fecha creación"
 
 msgctxt "field:carrier.zip,create_uid:"
 msgid "Create User"
-msgstr "Usuario de creación"
+msgstr "Usuario creación"
 
 msgctxt "field:carrier.zip,end_zip:"
 msgid "End Zip"
