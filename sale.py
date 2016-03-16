@@ -72,22 +72,24 @@ class Sale:
                 and self.shipment_address.zip or None)
         return context
 
-    def check_for_quotation(self):
-        res = super(Sale, self).check_for_quotation()
+    def pre_validate(self):
+        super(Sale, self).pre_validate()
+        self.check_carrier_zip()
+
+    def check_carrier_zip(self):
         shipment_zip = (self.shipment_address and self.shipment_address.zip
             or '')
         carrier = self.carrier
         if not carrier or not carrier.zips:
-            return res
+            return
         if (carrier and shipment_zip):
             for carrier_zip in carrier.zips:
                 if (int(carrier_zip.start_zip) <= int(shipment_zip)
                         <= int(carrier_zip.end_zip)):
                     break
             else:
-                self.raise_user_warning('%s.on_change_carrier' % self,
-                    'zip_unavailable', (shipment_zip, carrier.party.rec_name))
-        return res
+                self.raise_user_error('zip_unavailable',
+                    (shipment_zip, carrier.party.rec_name))
 
     def create_shipment(self, shipment_type):
         with Transaction().set_context(self._get_carrier_context()):
