@@ -9,7 +9,7 @@ msgstr ""
 
 msgctxt "error:sale.sale:"
 msgid "The zip \"%s\" is unavailable for the carrier \"%s\"."
-msgstr "El código posta \"%s\" no está disponible para el transportista \"%s\"."
+msgstr "El código postal \"%s\" no está disponible para el transportista \"%s\"."
 
 msgctxt "field:carrier,zips:"
 msgid "Carrier Zips"
