@@ -42,10 +42,15 @@ class Carrier:
     zips = fields.One2Many('carrier.zip', 'carrier', 'Carrier Zips')
 
     @staticmethod
-    def get_carriers_from_zip(zip_code):
+    def get_carriers_from_zip(zip_code, carriers=None):
         CarrierZip = Pool().get('carrier.zip')
-        carrier_zips = CarrierZip.search([
-                ('start_zip', '<=', zip_code),
-                ('end_zip', '>=', zip_code),
-                ])
+
+        domain = [
+            ('start_zip', '<=', zip_code),
+            ('end_zip', '>=', zip_code),
+            ]
+        if carriers:
+            domain.append(
+                ('carrier.id', 'in', [c.id for c in carriers]))
+        carrier_zips = CarrierZip.search(domain)
         return [c.carrier for c in carrier_zips]
