@@ -1,0 +1,64 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "error:carrier.zip:"
+msgid "Can't validate this zip. You must set it as an integer number."
+msgstr ""
+"No se puede validar este código postal. Establézcalo como un número entero."
+
+msgctxt "error:sale.sale:"
+msgid "The zip \"%s\" is unavailable for the carrier \"%s\"."
+msgstr "El código postal \"%s\" no está disponible para el transportista \"%s\"."
+
+msgctxt "field:carrier,zips:"
+msgid "Carrier Zips"
+msgstr "Códigos postales transportista"
+
+msgctxt "field:carrier.zip,carrier:"
+msgid "Carrier"
+msgstr "Transportista"
+
+msgctxt "field:carrier.zip,create_date:"
+msgid "Create Date"
+msgstr "Fecha creación"
+
+msgctxt "field:carrier.zip,create_uid:"
+msgid "Create User"
+msgstr "Usuario creación"
+
+msgctxt "field:carrier.zip,end_zip:"
+msgid "End Zip"
+msgstr "Código postal final"
+
+msgctxt "field:carrier.zip,id:"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "field:carrier.zip,rec_name:"
+msgid "Name"
+msgstr "Nombre"
+
+msgctxt "field:carrier.zip,start_zip:"
+msgid "Start Zip"
+msgstr "Código postal inicio"
+
+msgctxt "field:carrier.zip,write_date:"
+msgid "Write Date"
+msgstr "Fecha modificación"
+
+msgctxt "field:carrier.zip,write_uid:"
+msgid "Write User"
+msgstr "Usuario modificación"
+
+msgctxt "field:sale.sale,carrier_domain:"
+msgid "Carrier Domain"
+msgstr "Domini transportista"
+
+msgctxt "model:carrier.zip,name:"
+msgid "Carrier Zip"
+msgstr "Código postal transportista"
+
+msgctxt "view:carrier.zip:"
+msgid "Carrier Zips"
+msgstr "Códigos postales transportista"
