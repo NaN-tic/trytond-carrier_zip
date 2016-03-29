@@ -7,10 +7,10 @@ from trytond.pyson import Eval
 from trytond.transaction import Transaction
 
 __all__ = ['Sale']
-__metaclass__ = PoolMeta
 
 
 class Sale:
+    __metaclass__ = PoolMeta
     __name__ = 'sale.sale'
     carrier_domain = fields.Function(fields.One2Many('carrier', None,
             'Carrier Domain', depends=['shipment_address', 'party']),

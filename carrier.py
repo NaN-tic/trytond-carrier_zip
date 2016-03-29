@@ -4,7 +4,6 @@
 from trytond.model import ModelView, ModelSQL, fields
 from trytond.pool import Pool, PoolMeta
 
-__metaclass__ = PoolMeta
 __all__ = ['CarrierZip', 'Carrier']
 
 
@@ -38,6 +37,7 @@ class CarrierZip(ModelSQL, ModelView):
 
 
 class Carrier:
+    __metaclass__ = PoolMeta
     __name__ = 'carrier'
     zips = fields.One2Many('carrier.zip', 'carrier', 'Carrier Zips')
 
