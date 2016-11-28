@@ -3,7 +3,8 @@
 The COPYRIGHT file at the top level of this repository contains the full
 copyright notices and license terms. -->
 <data>
-    <xpath expr="/form/field[@name='carrier_cost_method']" position="after">
-        <field name="zips" colspan="4"/>
+    <xpath expr="/tree/field[@name='to_country']" position="after">
+        <field name="start_zip"/>
+        <field name="end_zip"/>
     </xpath>
 </data>

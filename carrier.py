@@ -1,51 +1,47 @@
 # This file is part of the carrier_zip module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
-from trytond.model import ModelView, ModelSQL, fields
-from trytond.pool import Pool, PoolMeta
+from trytond.model import fields
+from trytond.pool import PoolMeta
+from trytond.pyson import If, Bool, Eval
 
-__all__ = ['CarrierZip', 'Carrier']
-
-
-class CarrierZip(ModelSQL, ModelView):
-    'Carrier Zip'
-    __name__ = 'carrier.zip'
-    carrier = fields.Many2One('carrier', 'Carrier', required=True, select=True)
-    start_zip = fields.Char('Start Zip', required=True)
-    end_zip = fields.Char('End Zip', required=True)
-
-    @classmethod
-    def __setup__(cls):
-        super(CarrierZip, cls).__setup__()
-        cls._error_messages.update({
-                'wrong_zip': 'Can\'t validate this zip. You must set it as an '
-                    'integer number.'
-                })
-
-    @classmethod
-    def validate(cls, records):
-        super(CarrierZip, cls).validate(records)
-        for record in records:
-            record.check_zip_code()
-
-    def check_zip_code(self):
-        try:
-            int(self.start_zip)
-            int(self.end_zip)
-        except:
-            self.raise_user_error('wrong_zip')
+__all__ = ['CarrierSelection']
 
 
-class Carrier:
+class CarrierSelection:
+    __name__ = 'carrier.selection'
     __metaclass__ = PoolMeta
-    __name__ = 'carrier'
-    zips = fields.One2Many('carrier.zip', 'carrier', 'Carrier Zips')
+    start_zip = fields.Many2One('country.zip', 'Start Zip',
+        domain=[
+            If(Bool(Eval('to_country')),
+                ('country', '=', Eval('to_country')),
+                (),
+                )],
+        depends=['to_country'])
+    end_zip = fields.Many2One('country.zip', 'End Zip',
+        domain=[
+            If(Bool(Eval('to_country')),
+                ('country', '=', Eval('to_country')),
+                (),
+                )],
+        depends=['to_country'])
 
-    @staticmethod
-    def get_carriers_from_zip(zip_code):
-        CarrierZip = Pool().get('carrier.zip')
-        carrier_zips = CarrierZip.search([
-                ('start_zip', '<=', zip_code),
-                ('end_zip', '>=', zip_code),
-                ])
-        return [c.carrier for c in carrier_zips]
+    def match(self, pattern):
+        if 'shipment_zip' in pattern:
+            pattern = pattern.copy()
+            shipment_zip = pattern.pop('shipment_zip')
+            if shipment_zip:
+                start_zip, end_zip = None, None
+                try:
+                    zip = int(shipment_zip)
+                    if self.start_zip:
+                        start_zip = int(self.start_zip.zip)
+                    if self.end_zip:
+                        end_zip = int(self.end_zip.zip)
+                except ValueError:
+                    pass
+                if start_zip and zip < start_zip:
+                    return False
+                if end_zip and zip > end_zip:
+                    return False
+        return super(CarrierSelection, self).match(pattern)

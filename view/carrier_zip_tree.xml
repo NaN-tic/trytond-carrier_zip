@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<!-- This file is part of the carrier_zip module for Tryton.
-The COPYRIGHT file at the top level of this repository contains the full
-copyright notices and license terms. -->
-<tree string="Carrier Zips">
-    <field name="carrier"/>
-    <field name="start_zip"/>
-    <field name="end_zip"/>
-</tree>

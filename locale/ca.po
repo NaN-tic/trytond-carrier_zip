@@ -1,0 +1,11 @@
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:carrier.selection,end_zip:"
+msgid "End Zip"
+msgstr "Codi postal final"
+
+msgctxt "field:carrier.selection,start_zip:"
+msgid "Start Zip"
+msgstr "Codi postal inici"

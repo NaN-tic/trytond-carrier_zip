@@ -8,7 +8,6 @@ from .sale import *
 
 def register():
     Pool.register(
-        CarrierZip,
-        Carrier,
+        CarrierSelection,
         Sale,
         module='carrier_zip', type_='model')

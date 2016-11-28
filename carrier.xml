@@ -4,22 +4,15 @@ The COPYRIGHT file at the top level of this repository contains the full
 copyright notices and license terms. -->
 <tryton>
     <data>
-        <record model="ir.ui.view" id="carrier_view_form">
-            <field name="model">carrier</field>
-            <field name="type" eval="None"/>
-            <field name="inherit" ref="carrier.carrier_view_form"/>
-            <field name="name">carrier_form</field>
+        <record model="ir.ui.view" id="selection_view_form">
+            <field name="model">carrier.selection</field>
+            <field name="inherit" ref="carrier.carrier_selection_view_form"/>
+            <field name="name">selection_form</field>
         </record>
-
-        <record model="ir.ui.view" id="carrier_zip_view_form">
-            <field name="model">carrier.zip</field>
-            <field name="type">form</field>
-            <field name="name">carrier_zip_form</field>
-        </record>
-        <record model="ir.ui.view" id="carrier_zip_view_tree">
-            <field name="model">carrier.zip</field>
-            <field name="type">tree</field>
-            <field name="name">carrier_zip_tree</field>
+        <record model="ir.ui.view" id="selection_view_list">
+            <field name="model">carrier.selection</field>
+            <field name="inherit" ref="carrier.carrier_selection_view_list"/>
+            <field name="name">selection_list</field>
         </record>
 
     </data>
