@@ -25,5 +25,8 @@ class Sale:
         return context
 
     def create_shipment(self, shipment_type):
-        with Transaction().set_context(self._get_carrier_context()):
+        context = {}
+        if self.carrier:
+            context = self._get_carrier_context()
+        with Transaction().set_context(context):
             return super(Sale, self).create_shipment(shipment_type)
