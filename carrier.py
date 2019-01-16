@@ -8,9 +8,9 @@ from trytond.pyson import If, Bool, Eval
 __all__ = ['CarrierSelection']
 
 
-class CarrierSelection:
+class CarrierSelection(metaclass=PoolMeta):
     __name__ = 'carrier.selection'
-    __metaclass__ = PoolMeta
+    
     start_zip = fields.Many2One('country.zip', 'Start Zip',
         domain=[
             If(Bool(Eval('to_country')),
