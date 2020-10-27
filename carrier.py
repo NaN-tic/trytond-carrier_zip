@@ -10,7 +10,7 @@ __all__ = ['CarrierSelection']
 
 class CarrierSelection(metaclass=PoolMeta):
     __name__ = 'carrier.selection'
-    
+
     start_zip = fields.Many2One('country.zip', 'Start Zip',
         domain=[
             If(Bool(Eval('to_country')),
@@ -30,7 +30,7 @@ class CarrierSelection(metaclass=PoolMeta):
         if 'shipment_zip' in pattern:
             pattern = pattern.copy()
             shipment_zip = pattern.pop('shipment_zip')
-            if shipment_zip:
+            if (self.start_zip or self.end_zip) and shipment_zip:
                 start_zip, end_zip = None, None
                 try:
                     zip = int(shipment_zip)
