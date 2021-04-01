@@ -39,26 +39,27 @@ Create chart of accounts::
     >>> revenue = accounts['revenue']
     >>> expense = accounts['expense']
 
-Create some zip codes::
+Create some postal codes::
 
     >>> Country = Model.get('country.country')
-    >>> Zip = Model.get('country.zip')
+    >>> PostalCode = Model.get('country.postal_code')
     >>> country = Country(name='Country')
     >>> country.save()
-    >>> Zip.save([Zip(country=country, zip=str(i)) for i in range(10)])
+    >>> PostalCode.save([PostalCode(country=country, postal_code=str(i))
+    ...       for i in range(10)])
 
 Create customer::
 
     >>> Party = Model.get('party.party')
     >>> customer = Party(name='Customer')
     >>> address, = customer.addresses
-    >>> zip, = Zip.find([('zip', '=', '2')])
-    >>> address.zip = zip.zip
+    >>> postal_code, = PostalCode.find([('postal_code', '=', '2')])
+    >>> address.postal_code = postal_code.postal_code
     >>> customer.save()
     >>> other_customer = Party(name='Other Customer')
     >>> address, = other_customer.addresses
-    >>> zip, = Zip.find([('zip', '=', '7')])
-    >>> address.zip = zip.zip
+    >>> postal_code, = PostalCode.find([('postal_code', '=', '7')])
+    >>> address.postal_code = postal_code.postal_code
     >>> other_customer.save()
 
 Create product::
@@ -98,12 +99,12 @@ Create carrier::
     >>> carrier.carrier_product = carrier_product
     >>> carrier.save()
 
-Create a selection for zips from 1 to 5::
+Create a selection for postal_code from 1 to 5::
 
     >>> CarrierSelection = Model.get('carrier.selection')
     >>> csc = CarrierSelection(carrier=carrier)
-    >>> csc.start_zip, = Zip.find([('zip', '=', '1')])
-    >>> csc.end_zip, = Zip.find([('zip', '=', '5')])
+    >>> csc.start_postal_code, = PostalCode.find([('postal_code', '=', '1')])
+    >>> csc.end_postal_code, = PostalCode.find([('postal_code', '=', '5')])
     >>> csc.save()
 
 The carrier is selected for customer::

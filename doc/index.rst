@@ -1,5 +1,5 @@
 Carrier Zip Module
 ##################
 
-The carrier zip module add domain carriers with zip address. This module work
-with Spain zips because use numeric codes.
+The carrier zip module add domain carriers with postal code address. This
+module work with Spain postal codes because use numeric codes.

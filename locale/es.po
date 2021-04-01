@@ -2,10 +2,10 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
-msgctxt "field:carrier.selection,end_zip:"
-msgid "End Zip"
+msgctxt "field:carrier.selection,end_postal_code:"
+msgid "End Postal Code"
 msgstr "Código postal final"
 
-msgctxt "field:carrier.selection,start_zip:"
-msgid "Start Zip"
+msgctxt "field:carrier.selection,start_postal_code:"
+msgid "Start Postal Code"
 msgstr "Código postal inicio"

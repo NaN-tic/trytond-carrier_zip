@@ -5,20 +5,18 @@ from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.pyson import If, Bool, Eval
 
-__all__ = ['CarrierSelection']
-
 
 class CarrierSelection(metaclass=PoolMeta):
     __name__ = 'carrier.selection'
 
-    start_zip = fields.Many2One('country.zip', 'Start Zip',
-        domain=[
+    start_postal_code = fields.Many2One('country.postal_code',
+        'Start Postal Code', domain=[
             If(Bool(Eval('to_country')),
                 ('country', '=', Eval('to_country')),
                 (),
                 )],
         depends=['to_country'])
-    end_zip = fields.Many2One('country.zip', 'End Zip',
+    end_postal_code = fields.Many2One('country.postal_code', 'End Postal Code',
         domain=[
             If(Bool(Eval('to_country')),
                 ('country', '=', Eval('to_country')),
@@ -26,22 +24,31 @@ class CarrierSelection(metaclass=PoolMeta):
                 )],
         depends=['to_country'])
 
+    @classmethod
+    def __register__(cls, module):
+        # Migration from 5.8: rename zip to postal_code
+        table_h = cls.__table_handler__(module)
+        table_h.column_rename('start_zip', 'start_postal_code')
+        table_h.column_rename('end_zip', 'end_postal_code')
+        super().__register__(module)
+
     def match(self, pattern):
-        if 'shipment_zip' in pattern:
+        if 'shipment_postal_code' in pattern:
             pattern = pattern.copy()
-            shipment_zip = pattern.pop('shipment_zip')
-            if (self.start_zip or self.end_zip) and shipment_zip:
-                start_zip, end_zip = None, None
+            shipment_postal_code = pattern.pop('shipment_postal_code')
+            if ((self.start_postal_code or self.end_postal_code)
+                    and shipment_postal_code):
+                start_postal_code, end_postal_code = None, None
                 try:
-                    zip = int(shipment_zip)
-                    if self.start_zip:
-                        start_zip = int(self.start_zip.zip)
-                    if self.end_zip:
-                        end_zip = int(self.end_zip.zip)
+                    postal_code = int(shipment_postal_code)
+                    if self.start_postal_code:
+                        start_postal_code = int(self.start_postal_code.postal_code)
+                    if self.end_postal_code:
+                        end_postal_code = int(self.end_postal_code.postal_code)
                 except ValueError:
                     pass
-                if start_zip and zip < start_zip:
+                if start_postal_code and postal_code < start_postal_code:
                     return False
-                if end_zip and zip > end_zip:
+                if end_postal_code and postal_code > end_postal_code:
                     return False
         return super(CarrierSelection, self).match(pattern)
