@@ -14,15 +14,13 @@ class CarrierSelection(metaclass=PoolMeta):
             If(Bool(Eval('to_country')),
                 ('country', '=', Eval('to_country')),
                 (),
-                )],
-        depends=['to_country'])
+                )])
     end_postal_code = fields.Many2One('country.postal_code', 'End Postal Code',
         domain=[
             If(Bool(Eval('to_country')),
                 ('country', '=', Eval('to_country')),
                 (),
-                )],
-        depends=['to_country'])
+                )])
 
     @classmethod
     def __register__(cls, module):
