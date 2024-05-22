@@ -14,8 +14,8 @@ class Sale(metaclass=PoolMeta):
             pattern['shipment_postal_code'] = self.shipment_address.postal_code
         return pattern
 
-    def _get_carrier_context(self):
-        context = super(Sale, self)._get_carrier_context()
+    def _get_carrier_context(self, carrier):
+        context = super(Sale, self)._get_carrier_context(carrier)
         if self.carrier and self.carrier.carrier_cost_method == 'grid':
             context['shipment_postal_code'] = (self.shipment_address
                 and self.shipment_address.postal_code or None)
