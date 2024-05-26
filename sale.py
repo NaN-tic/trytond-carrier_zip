@@ -9,14 +9,14 @@ class Sale(metaclass=PoolMeta):
     __name__ = 'sale.sale'
 
     def _get_carrier_selection_pattern(self):
-        pattern = super(Sale, self)._get_carrier_selection_pattern()
+        pattern = super()._get_carrier_selection_pattern()
         if self.shipment_address:
             pattern['shipment_postal_code'] = self.shipment_address.postal_code
         return pattern
 
     def _get_carrier_context(self, carrier):
-        context = super(Sale, self)._get_carrier_context(carrier)
-        if self.carrier and self.carrier.carrier_cost_method == 'grid':
+        context = super()._get_carrier_context(carrier)
+        if carrier and carrier.carrier_cost_method == 'grid':
             context['shipment_postal_code'] = (self.shipment_address
                 and self.shipment_address.postal_code or None)
         return context
@@ -24,6 +24,6 @@ class Sale(metaclass=PoolMeta):
     def create_shipment(self, shipment_type):
         context = {}
         if self.carrier:
-            context = self._get_carrier_context()
+            context = self._get_carrier_context(self.carrier)
         with Transaction().set_context(context):
-            return super(Sale, self).create_shipment(shipment_type)
+            return super().create_shipment(shipment_type)
